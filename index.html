@@ -97,7 +97,7 @@
 </head>
 <body>
   <!-- Musik -->
-  <audio id="lagu" autoplay loop muted>
+  <audio id="lagu" autoplay loop playsinline>
     <source src="lagu.mp3" type="audio/mpeg">
   </audio>
 
@@ -143,13 +143,19 @@ cukup bawa doa sama tawa, udah pas kali! ✨<br>Terima kasih atas doa & dukungan
     // Scroll animation
     ScrollReveal().reveal('.section', { delay: 300, distance: '50px', origin: 'bottom', duration: 800 });
 
-    // Buka mute otomatis saat halaman sudah load
-    window.addEventListener("load", () => {
-      const lagu = document.getElementById("lagu");
-      lagu.muted = false;
-      lagu.play().catch(err => {
-        console.log("Autoplay dicegah browser:", err);
-      });
+    // Musik autoplay + fallback
+    const lagu = document.getElementById("lagu");
+
+    lagu.play().catch(() => {
+      const startMusic = () => {
+        lagu.play();
+        document.removeEventListener("click", startMusic);
+        document.removeEventListener("scroll", startMusic);
+        document.removeEventListener("touchstart", startMusic);
+      };
+      document.addEventListener("click", startMusic);
+      document.addEventListener("scroll", startMusic);
+      document.addEventListener("touchstart", startMusic);
     });
   </script>
 </body>
