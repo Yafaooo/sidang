@@ -21,6 +21,53 @@
       overflow-x: hidden;
     }
 
+    /* Splash screen */
+    #splash {
+      position: fixed;
+      inset: 0;
+      background: url('https://upload.wikimedia.org/wikipedia/commons/6/61/Ulos_Sadum.jpg') no-repeat center/cover;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      text-align: center;
+    }
+
+    #splash::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+    }
+
+    #splash h1 {
+      position: relative;
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      z-index: 2;
+    }
+
+    #openBtn {
+      position: relative;
+      z-index: 2;
+      padding: 15px 40px;
+      background: #ff4444;
+      border: none;
+      border-radius: 40px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 0 20px #ff4444;
+      transition: 0.3s;
+    }
+
+    #openBtn:hover {
+      background: #ff2222;
+      transform: scale(1.05);
+    }
+
     header {
       height: 100vh;
       display: flex;
@@ -97,41 +144,58 @@
 </head>
 <body>
   <!-- Musik -->
-  <audio id="lagu" autoplay loop playsinline>
+  <audio id="lagu" loop>
     <source src="lagu.mp3" type="audio/mpeg">
   </audio>
 
-  <header>
-    <h1 id="typed"></h1>
-    <p>Dengan hormat mengundang Bapak/Ibu/Saudara/i dan kawan-kawan untuk hadir dalam sidang skripsi saya.</p>
-  </header>
-
-  <div class="section" id="about">
-    <img src="foto.jpg" alt="Foto Saya" class="foto">
-    <h2>YAFAO MABE LAMBOE</h2>
-    <p>Judul Skripsi: <b>“RANCANG BANGUN SISTEM PENGHARUM RUANGAN BERBASIS REAL TIME CLOCK DAN PENJADWALAN ANDROID”</b></p>
+  <!-- Splash screen -->
+  <div id="splash">
+    <h1>Undangan Skripsi Yafao</h1>
+    <button id="openBtn">🎉 Buka Undangan</button>
   </div>
 
-  <div class="section" id="detail">
-    <h2>Detail Acara</h2>
-    <p><b>Tanggal:</b> 27 September 2025</p>
-    <p><b>Waktu:</b> 08.00-18.00 WIB (Doakan Cepat Supaya cepat sah kita jadi S.Kom dan cepat juga pulang wkwk)</p>
-    <p><b>Tempat:</b> ITB INDONESIA Kampus Utama<br>
-    Jl. Binjai - Stabat No.Desa, Tandem Hilir, Kec. Hamparan Perak, Kabupaten Deli Serdang, Sumatera Utara</p>
-    <a href="https://share.google/Q9X5aQW6x0QKkBWec" class="btn">Lihat Lokasi</a>
-  </div>
+  <!-- Konten undangan -->
+  <div id="mainContent" style="display:none;">
+    <header>
+      <h1 id="typed"></h1>
+      <p>Dengan hormat mengundang Bapak/Ibu/Saudara/i dan kawan-kawan untuk hadir dalam sidang skripsi saya.</p>
+    </header>
 
-  <div class="section" id="note">
-    <h2>Catatan</h2>
-    <p>Dimohon kehadirannya dengan penuh hormat. Kalau pun ndak bisa bawa hadiah, 
-cukup bawa doa sama tawa, udah pas kali! ✨<br>Terima kasih atas doa & dukungan Bapak/Ibu/Saudara/i.</p>
-  </div>
+    <div class="section" id="about">
+      <img src="foto.jpg" alt="Foto Saya" class="foto">
+      <h2>YAFAO MABE LAMBOE</h2>
+      <p>Judul Skripsi: <b>“RANCANG BANGUN SISTEM PENGHARUM RUANGAN BERBASIS REAL TIME CLOCK DAN PENJADWALAN ANDROID”</b></p>
+    </div>
 
-  <footer>
-    <p>© 2025 | Undangan Skripsi Yafao</p>
-  </footer>
+    <div class="section" id="detail">
+      <h2>Detail Acara</h2>
+      <p><b>Tanggal:</b> 27 September 2025</p>
+      <p><b>Waktu:</b> 08.00-18.00 WIB (Doakan Cepat Supaya cepat sah kita jadi S.Kom dan cepat juga pulang wkwk)</p>
+      <p><b>Tempat:</b> ITB INDONESIA Kampus Utama<br>
+      Jl. Binjai - Stabat No.Desa, Tandem Hilir, Kec. Hamparan Perak, Kabupaten Deli Serdang, Sumatera Utara</p>
+      <a href="https://share.google/Q9X5aQW6x0QKkBWec" class="btn">Lihat Lokasi</a>
+    </div>
+
+    <div class="section" id="note">
+      <h2>Catatan</h2>
+      <p>Dimohon kehadirannya dengan penuh hormat. Kalau pun ndak bisa bawa hadiah, 
+    cukup bawa doa sama tawa, udah pas kali! ✨<br>Terima kasih atas doa & dukungan Bapak/Ibu/Saudara/i.</p>
+    </div>
+
+    <footer>
+      <p>© 2025 | Undangan Skripsi Yafao</p>
+    </footer>
+  </div>
 
   <script>
+    // Tombol splash
+    document.getElementById("openBtn").addEventListener("click", () => {
+      document.getElementById("splash").style.display = "none";
+      document.getElementById("mainContent").style.display = "block";
+      const lagu = document.getElementById("lagu");
+      lagu.play();
+    });
+
     // Animasi typing
     var typed = new Typed('#typed', {
       strings: ["Horas!, Ya'ahowu", "Selamat Datang di Undangan Skripsi Saya", "Mari Bersama Merayakan Perjuangan Ini!"],
@@ -142,21 +206,6 @@ cukup bawa doa sama tawa, udah pas kali! ✨<br>Terima kasih atas doa & dukungan
 
     // Scroll animation
     ScrollReveal().reveal('.section', { delay: 300, distance: '50px', origin: 'bottom', duration: 800 });
-
-    // Musik autoplay + fallback
-    const lagu = document.getElementById("lagu");
-
-    lagu.play().catch(() => {
-      const startMusic = () => {
-        lagu.play();
-        document.removeEventListener("click", startMusic);
-        document.removeEventListener("scroll", startMusic);
-        document.removeEventListener("touchstart", startMusic);
-      };
-      document.addEventListener("click", startMusic);
-      document.addEventListener("scroll", startMusic);
-      document.addEventListener("touchstart", startMusic);
-    });
   </script>
 </body>
 </html>
